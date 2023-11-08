@@ -4,7 +4,7 @@ import { Table } from '@radix-ui/themes';
 import prisma from '@/prisma/client';
 import Toolbar from './Toolbar';
 import IssueStatusBadge from '../components/IssueStatusBadge';
-import Link from 'next/link';
+import Link from '../components/Link';
 
 const sleep = (delay: number) => {
   return new Promise((resolve) => {
