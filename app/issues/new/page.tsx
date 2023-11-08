@@ -1,17 +1,22 @@
 'use client';
 
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Callout, TextField } from '@radix-ui/themes';
-import SimpleMDE from 'react-simplemde-editor';
-import 'easymde/dist/easymde.min.css';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
+import 'easymde/dist/easymde.min.css';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { createIssueScheme } from '@/app/validationScheme';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
+import dynamic from 'next/dynamic';
+
 import ErrorMessage from '@/app/components/ErrorMessage';
 import Spinner from '@/app/components/Spinner';
+import { createIssueScheme } from '@/app/validationScheme';
+
+const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
+  ssr: false,
+});
 
 type IssueForm = z.infer<typeof createIssueScheme>;
 
@@ -23,7 +28,6 @@ const NewIssuePage = () => {
     formState: { errors, isSubmitting },
   } = useForm<IssueForm>({
     resolver: zodResolver(createIssueScheme),
-
   });
   const router = useRouter();
   const [error, setError] = useState('');
