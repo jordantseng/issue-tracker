@@ -10,8 +10,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import dynamic from 'next/dynamic';
 
-import ErrorMessage from '@/app/components/ErrorMessage';
-import Spinner from '@/app/components/Spinner';
+import { Spinner, ErrorMessage } from '@/app/components';
 import { createIssueScheme } from '@/app/validationScheme';
 
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
