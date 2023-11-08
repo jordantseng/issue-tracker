@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Callout, Text, TextField } from '@radix-ui/themes';
+import { Button, Callout, TextField } from '@radix-ui/themes';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
@@ -23,6 +23,7 @@ const NewIssuePage = () => {
     formState: { errors, isSubmitting },
   } = useForm<IssueForm>({
     resolver: zodResolver(createIssueScheme),
+
   });
   const router = useRouter();
   const [error, setError] = useState('');
