@@ -15,8 +15,6 @@ const statusMap: Record<
 };
 
 const IssueStatusBadge = ({ status }: IssueStatusBadgeProps) => {
-  console.log('status', status);
-
   return (
     <Badge color={statusMap[status].color}>{statusMap[status].label}</Badge>
   );

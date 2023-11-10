@@ -1,5 +1,4 @@
 'use client';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Callout, TextField } from '@radix-ui/themes';
 import axios from 'axios';
@@ -8,15 +7,11 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import dynamic from 'next/dynamic';
+import SimpleMDE from 'react-simplemde-editor';
 import { Issue } from '@prisma/client';
 
 import { Spinner, ErrorMessage } from '@/app/components';
 import { upsertIssueScheme } from '@/app/validationScheme';
-
-const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
-  ssr: false,
-});
 
 type IssueFormData = z.infer<typeof upsertIssueScheme>;
 
@@ -44,7 +39,7 @@ const IssueForm = ({ issue }: IssueFormProps) => {
         await axios.post('/api/issues', data);
       }
       router.push('/issues');
-      router.refresh()
+      router.refresh();
     } catch (error) {
       setError('An unexpected error occurred.');
     }
