@@ -12,13 +12,13 @@ import dynamic from 'next/dynamic';
 import { Issue } from '@prisma/client';
 
 import { Spinner, ErrorMessage } from '@/app/components';
-import { createIssueScheme } from '@/app/validationScheme';
+import { upsertIssueScheme } from '@/app/validationScheme';
 
 const SimpleMDE = dynamic(() => import('react-simplemde-editor'), {
   ssr: false,
 });
 
-type IssueFormData = z.infer<typeof createIssueScheme>;
+type IssueFormData = z.infer<typeof upsertIssueScheme>;
 
 type IssueFormProps = {
   issue?: Issue;
@@ -31,7 +31,7 @@ const IssueForm = ({ issue }: IssueFormProps) => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueScheme),
+    resolver: zodResolver(upsertIssueScheme),
   });
   const router = useRouter();
   const [error, setError] = useState('');
