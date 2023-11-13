@@ -7,6 +7,7 @@ import EditIssueButton from './EditIssueButton';
 import IssueDetails from './IssueDetails';
 import DeleteIssueButton from './DeleteIssueButton';
 import authOptions from '@/app/auth/authOption';
+import AssigneeSelect from './AssigneeSelect';
 
 type IssueDetailPageProps = {
   params: { id: string };
@@ -40,6 +41,7 @@ const IssueDetailPage = async ({ params }: IssueDetailPageProps) => {
       </Box>
       {session && (
         <Flex direction="column" gap="4">
+          <AssigneeSelect />
           <EditIssueButton issueId={issue.id} />
           <DeleteIssueButton issueId={issue.id} />
         </Flex>
