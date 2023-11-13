@@ -4,16 +4,13 @@ import { Select } from '@radix-ui/themes';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+
 import { Skeleton } from '@/app/components';
 
 type AssigneeSelectProps = { issue: Issue };
 
-const AssigneeSelect = ({ issue }: AssigneeSelectProps) => {
-  const {
-    data: users,
-    error,
-    isLoading,
-  } = useQuery<User[]>({
+const useFetchUsers = () => {
+  return useQuery<User[]>({
     queryKey: ['users'],
     queryFn: async () => {
       const { data } = await axios.get('/api/users');
@@ -22,6 +19,10 @@ const AssigneeSelect = ({ issue }: AssigneeSelectProps) => {
     staleTime: 60 * 1000,
     retry: 3,
   });
+};
+
+const AssigneeSelect = ({ issue }: AssigneeSelectProps) => {
+  const { data: users, error, isLoading } = useFetchUsers();
 
   if (isLoading) {
     return <Skeleton />;
@@ -45,7 +46,7 @@ const AssigneeSelect = ({ issue }: AssigneeSelectProps) => {
     <>
       <Select.Root
         defaultValue={issue.assignedToUserId || ''}
-        onValueChange={(userId) => handleChange(userId)}
+        onValueChange={handleChange}
       >
         <Select.Trigger placeholder="Assign..." />
         <Select.Content>
