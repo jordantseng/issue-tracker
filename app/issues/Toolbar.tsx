@@ -6,10 +6,10 @@ import IssueStatusFilter from './IssueStatusFilter';
 const Toolbar = () => {
   return (
     <Flex mb="5" justify="between">
+      <IssueStatusFilter />
       <Link href="/issues/new">
         <Button>New Issue</Button>
       </Link>
-      <IssueStatusFilter />
     </Flex>
   );
 };
