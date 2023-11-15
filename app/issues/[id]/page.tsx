@@ -8,12 +8,13 @@ import IssueDetails from './IssueDetails';
 import DeleteIssueButton from './DeleteIssueButton';
 import authOptions from '@/app/auth/authOption';
 import AssigneeSelect from './AssigneeSelect';
+import { cache } from 'react';
 
 type IssueDetailPageProps = {
   params: { id: string };
 };
 
-const getIssue = async (id: string) => {
+const getIssue = cache(async (id: string) => {
   if (Number.isNaN(parseInt(id))) {
     notFound();
   }
@@ -27,7 +28,7 @@ const getIssue = async (id: string) => {
   }
 
   return issue;
-};
+});
 
 const IssueDetailPage = async ({ params }: IssueDetailPageProps) => {
   const session = await getServerSession(authOptions);
@@ -51,9 +52,7 @@ const IssueDetailPage = async ({ params }: IssueDetailPageProps) => {
 };
 
 export async function generateMetadata({ params }: IssueDetailPageProps) {
-  const issue = await prisma.issue.findUnique({
-    where: { id: parseInt(params.id) },
-  });
+  const issue = await getIssue(params.id);
 
   return {
     title: issue?.title,
