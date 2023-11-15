@@ -41,7 +41,7 @@ const IssueDetailPage = async ({ params }: IssueDetailPageProps) => {
       </Box>
       {session && (
         <Flex direction="column" gap="4">
-          <AssigneeSelect issue={issue}/>
+          <AssigneeSelect issue={issue} />
           <EditIssueButton issueId={issue.id} />
           <DeleteIssueButton issueId={issue.id} />
         </Flex>
@@ -49,5 +49,16 @@ const IssueDetailPage = async ({ params }: IssueDetailPageProps) => {
     </Grid>
   );
 };
+
+export async function generateMetadata({ params }: IssueDetailPageProps) {
+  const issue = await prisma.issue.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
+  return {
+    title: issue?.title,
+    describe: `$Details of issue ${issue?.id}`,
+  };
+}
 
 export default IssueDetailPage;
